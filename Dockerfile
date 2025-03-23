@@ -1,35 +1,32 @@
-FROM node:18-alpine
+FROM node:18-slim
 
-# Install required dependencies
-RUN apk add --no-cache \
+# Install Chromium and dependencies
+RUN apt-get update && apt-get install -y \
     chromium \
-    nss \
-    freetype \
-    harfbuzz \
-    ca-certificates \
-    ttf-freefont \
-    curl \
-    bash \
-    dumb-init \
-    libc6-compat \
-    git \
-    python3 \
-    make \
-    g++
+    fonts-liberation \
+    libatk-bridge2.0-0 \
+    libgtk-3-0 \
+    libnss3 \
+    libxss1 \
+    libasound2 \
+    libxshmfence-dev \
+    --no-install-recommends && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set Puppeteer Chromium path
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+# Set environment variables for Puppeteer
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 ENV NODE_ENV=production
 
 # Create app directory
 WORKDIR /data
 
-# Install n8n
+# Install n8n globally
 RUN npm install -g n8n
 
-# Expose port
+# Expose default n8n port
 EXPOSE 5678
 
-# Default command
+# Start n8n
 CMD ["n8n"]
 
