@@ -1,0 +1,25 @@
+# Render Blueprint for n8n + Puppeteer + Vision AI
+
+services:
+  - type: web
+    name: elroy-crypto-trade-master
+    env: docker
+    repo: https://github.com/YOUR_USERNAME/elroy-crypto-trade-vision
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: true
+      - key: N8N_BASIC_AUTH_USER
+        value: admin
+      - key: N8N_BASIC_AUTH_PASSWORD
+        value: Pr0s0und1!23456
+      - key: N8N_PROTOCOL
+        value: http
+      - key: N8N_PORT
+        value: 5678
+      - key: PUPPETEER_EXECUTABLE_PATH
+        value: /usr/bin/chromium
+      - key: WEBHOOK_URL
+        value: https://localhost
+      - key: WEBHOOK_TUNNEL_URL
+        value: https://localhost
